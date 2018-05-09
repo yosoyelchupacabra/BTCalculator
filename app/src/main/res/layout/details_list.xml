@@ -8,7 +8,7 @@
         android:textSize="20dp"
         android:textColor="@color/colorPrimaryDark"
         android:textAlignment="center"
-        android:text="1Bitcoin = 1000 USD"
+        android:text="Mining Profits Calculator"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
         android:layout_width="match_parent"

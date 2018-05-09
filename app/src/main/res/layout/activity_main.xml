@@ -41,13 +41,13 @@
         </ListView>
 
         <Button
-            android:id="@+id/refreshButton"
+            android:id="@+id/calculateButton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/colorPrimary"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             android:textSize="15dp"
-            android:text="@string/refresh_button"/>
+            android:text="@string/calculate_button"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

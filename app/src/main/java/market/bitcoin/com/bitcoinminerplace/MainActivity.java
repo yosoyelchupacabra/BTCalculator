@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** declaring listView and button variable */
     ListView listView;
-    Button refreshButton;
+    Button calculateButton;
 
     /**
      * @override method call first when application start
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         /** initializing listView and refresh button */
         listView = (ListView) findViewById(R.id.mainListView);
-        refreshButton = (Button) findViewById(R.id.refreshButton);
+        calculateButton = (Button) findViewById(R.id.calculateButton);
 
         /**
          * setOnItemClickListener this method calls when any item selected from listView item menu
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
          * initializing setOnCLickListener calls when click on listView
          * @param OnCLickListener
          * */
-        refreshButton.setOnClickListener(new View.OnClickListener() {
+        calculateButton.setOnClickListener(new View.OnClickListener() {
             /**
              * @override method onClick calls when button click action performed
              * @param view
