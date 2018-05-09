@@ -1,9 +1,9 @@
 # BTCalculator
-BTCalculator provides latest basic details about bitcoin price miner revenue etc. and calculate mining profits
+BTCalculator provides to calculate mining profits
 
 ## Getting Started
-This application uploaded for learning purpose. This application works simple and smart it get latest bicoin price miner revenue etc from blockchain official site and show information in seconds to your smart phone.
-Then provides to calculate mining profits
+This application uploaded for learning purpose. 
+This application works simple and smart it get latest bicoin difficulty from blockchain official site and provides to calculate mining profits showing information in seconds to your smart phone.
 
 ## Permissions
 1. android.permission.INTERNET
@@ -15,4 +15,4 @@ Copy these lines to your MainActivity.java for permit all strict mode threads.
 2. StrictMode.setThreadPolicy(policy);
 
 ## Built with
-Android Studio
+Android Studio 3.1.2
