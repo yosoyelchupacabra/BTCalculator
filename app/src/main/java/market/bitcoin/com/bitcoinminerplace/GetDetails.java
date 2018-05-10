@@ -10,10 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
-/**
- * Created by zainm on 14-Sep-17.
- */
-
 public class GetDetails {
 
     /** 2D array for detail names for JSON and user */
@@ -21,9 +17,9 @@ public class GetDetails {
             "n_blocks_total", "estimated_transaction_volume_usd", "blocks_size", "miners_revenue_usd", "nextretarget", "difficulty", "estimated_btc_sent",
             "miners_revenue_btc", "total_btc_sent", "trade_volume_btc", "trade_volume_usd"},
 
-            {"USD Price: ", "Hash Rate: ", "Total Fee BTC: ", "No. of BTC Mined: ", "No. of Transactions: ", "No. of Blocks Mined: ", "Minutes b/w Blocks: ", "Total BC: ",
-            "No. of total blocks: ", "Estimated Trans. Vol. USD: ", "Blocks Size: ", "Miners Revenue USD: ", "Next Tre-Target: ", "Difficulty: ", "Estimated BTC Sent: ",
-            "Miners Revenue BTC: ", "Total BTC Sent: ", "Trade Vol. BTC: ", "Trade Vol. USD: "}
+            {"USD Price", "Hash Rate", "Total Fee BTC", "No. of BTC Mined", "No. of Transactions", "No. of Blocks Mined", "Minutes b/w Blocks", "Total BC",
+            "No. of total blocks", "Estimated Trans. Vol. USD", "Blocks Size", "Miners Revenue USD", "Next Tre-Target", "Difficulty", "Estimated BTC Sent",
+            "Miners Revenue BTC", "Total BTC Sent", "Trade Vol. BTC", "Trade Vol. USD"}
     };
 
     /** hashMap data structure for storing json results */

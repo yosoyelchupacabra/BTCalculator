@@ -10,14 +10,16 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import market.bitcoin.com.bitcoinminerplace.adapter.CustomAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    /** declaring listView and button variable */
+    /** declaring listView, button and progressBar variable */
     ListView listView;
     Button calculateButton;
+    ProgressBar progressBar = null;
 
     /**
      * @override method call first when application start
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         /** initializing listView and refresh button */
         listView = (ListView) findViewById(R.id.mainListView);
         calculateButton = (Button) findViewById(R.id.calculateButton);
+        /** initializing ProgressBar */
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.GONE);
 
         /**
          * setOnItemClickListener this method calls when any item selected from listView item menu
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 /** initializing alertDialog to show details */
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-                alertDialog.setTitle(GetDetails.details[1][i]);
+                alertDialog.setTitle(GetDetails.details[1][i] + " : ");
                 alertDialog.setMessage(GetDetails.blockchainDetails.get(GetDetails.details[0][i]));
                 alertDialog.show();
             }
@@ -69,20 +74,45 @@ public class MainActivity extends AppCompatActivity {
              * */
             @Override
             public void onClick(View view) {
-                /**
-                 * initializing progress dialog to show user waiting
-                 * @param context
-                 * */
-                ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-                progressDialog.setTitle("Please wait");
-                progressDialog.setMessage("Fetching...");
-                progressDialog.show();
+                // Rendo visibile la progressBar per mostrare che sto caricando
+                progressBar.setVisibility(View.VISIBLE);
+                // Quando premo il pulsante gli cambio il colore per far capire che sta lavorando
+                calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryDark));
+
+                // Ripopolo i dettagli
                 loadDetails();
-                progressDialog.cancel();
+
+                // Rendo invisibile la progressBar per far capire che ho finito di caricare
+                progressBar.setVisibility(View.GONE); //To Hide ProgressBar
+                // Alla fine del listener riporto il colore del pulsante come prima
+                calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimary));
             }
         });
 
-        loadDetails();
+        /**
+         * initializing setOnLongCLickListener calls when long click on listView
+         * @param OnCLickListener
+         * */
+        calculateButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                // Pulisco i dettagli
+                cleanDetails();
+                return true;
+            }
+        });
+
+        // Commentato per non caricare gli elementi all'avvio ma solo al premere del pulsante
+        // loadDetails();
+    }
+
+    /**
+     * cleanDetails method calls to clean details
+     * @throws IllegalArgumentException
+     * */
+    void cleanDetails(){
+        /** cleaning up listView */
+        listView.setAdapter(null);
     }
 
     /**

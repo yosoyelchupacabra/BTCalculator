@@ -2,5 +2,5 @@
     <string name="app_name">BTCalculator</string>
     <string name="title_name">BTCalculator</string>
     <string name="current_details_title">Mining Profits</string>
-    <string name="calculate_button">CALCULATE</string>
+    <string name="calculate_button">CALCULATE / CLEAN</string>
 </resources>

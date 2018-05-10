@@ -9,10 +9,6 @@ import java.util.HashMap;
 import market.bitcoin.com.bitcoinminerplace.GetDetails;
 import market.bitcoin.com.bitcoinminerplace.R;
 
-/**
- * Created by zainm on 14-Sep-17.
- */
-
 public class CustomAdapter extends BaseAdapter {
 
     /** declaring variables for context and HashMap data structures*/
@@ -71,7 +67,10 @@ public class CustomAdapter extends BaseAdapter {
         /** initializing textView */
         TextView listTextView = (TextView) view.findViewById(R.id.listTextView);
         /** setting results to listView textView */
-        listTextView.setText(GetDetails.details[1][i] + details.get(GetDetails.details[0][i]));
+
+        // Lascio in visualizzazione solo le etichette
+        // I dettagli li espongo solo nella AlertDialog
+        listTextView.setText(GetDetails.details[1][i] /* + details.get(GetDetails.details[0][i])*/);
         return view;
     }
 }
