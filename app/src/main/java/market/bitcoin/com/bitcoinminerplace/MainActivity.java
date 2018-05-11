@@ -1,6 +1,5 @@
 package market.bitcoin.com.bitcoinminerplace;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
@@ -11,20 +10,23 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ProgressBar;
+import android.os.AsyncTask;
 
 import market.bitcoin.com.bitcoinminerplace.adapter.CustomAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    /** declaring listView, button and progressBar variable */
+    /**
+     * declaring listView, button and progressBar variable
+     */
     ListView listView;
     Button calculateButton;
     ProgressBar progressBar = null;
 
     /**
-     * @override method call first when application start
      * @param savedInstanceState
-     * */
+     * @override method call first when application start
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,18 +76,9 @@ public class MainActivity extends AppCompatActivity {
              * */
             @Override
             public void onClick(View view) {
-                // Rendo visibile la progressBar per mostrare che sto caricando
-                progressBar.setVisibility(View.VISIBLE);
-                // Quando premo il pulsante gli cambio il colore per far capire che sta lavorando
-                calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryDark));
 
-                // Ripopolo i dettagli
-                loadDetails();
+                new MyAsyncCaller().execute();
 
-                // Rendo invisibile la progressBar per far capire che ho finito di caricare
-                progressBar.setVisibility(View.GONE); //To Hide ProgressBar
-                // Alla fine del listener riporto il colore del pulsante come prima
-                calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimary));
             }
         });
 
@@ -108,21 +101,23 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * cleanDetails method calls to clean details
+     *
      * @throws IllegalArgumentException
-     * */
-    void cleanDetails(){
+     */
+    void cleanDetails() {
         /** cleaning up listView */
         listView.setAdapter(null);
     }
 
     /**
      * loadDetails method calls to get details from blockchain web service
+     *
      * @throws IllegalArgumentException
-     * */
-    void loadDetails(){
+     */
+    CustomAdapter loadDetails() {
         try {
             GetDetails.loadDetailsFromWeb();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -132,7 +127,45 @@ public class MainActivity extends AppCompatActivity {
          * @param blockchainDetails
          * */
         CustomAdapter customAdapter = new CustomAdapter(this, GetDetails.blockchainDetails);
-        /** setting up custom adapter object */
-        listView.setAdapter(customAdapter);
+
+        return customAdapter;
+    }
+
+    private class MyAsyncCaller extends AsyncTask<String, Integer, CustomAdapter> {
+        @Override
+        protected void onPreExecute() {
+            // Pre Code
+            // Rendo visibile la progressBar per mostrare che sto caricando
+            progressBar.setVisibility(View.VISIBLE);
+            // Quando premo il pulsante gli cambio il colore per far capire che sta lavorando
+            calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryDark));
+        }
+
+        @Override
+        protected CustomAdapter doInBackground(String... parametro) {
+            // Background Code
+            // Ripopolo i dettagli
+            CustomAdapter customAdapter = loadDetails();
+            //publishProgress();
+            return customAdapter;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            // Executes whenever publishProgress is called from doInBackground
+            // Used to update the progress indicator
+            // progressBar.setProgress();
+        }
+
+        @Override
+        protected void onPostExecute(CustomAdapter result) {
+            // Post Code
+            /** setting up custom adapter object */
+            listView.setAdapter(result);
+            // Rendo invisibile la progressBar per far capire che ho finito di caricare
+            progressBar.setVisibility(View.GONE); //To Hide ProgressBar
+            // Alla fine del listener riporto il colore del pulsante come prima
+            calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimary));
+        }
     }
 }
