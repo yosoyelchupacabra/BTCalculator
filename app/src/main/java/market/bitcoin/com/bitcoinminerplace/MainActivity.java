@@ -11,10 +11,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ProgressBar;
 import android.os.AsyncTask;
-
 import market.bitcoin.com.bitcoinminerplace.adapter.CustomAdapter;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends AppCompatActivity {
+
+    /**
+     * declaring ADMOB_APP_ID
+     */
+    String YOUR_ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713";
 
     /**
      * declaring listView, button and progressBar variable
@@ -24,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar = null;
 
     /**
+     * declaring AdView
+     */
+    private AdView mAdView;
+
+    /**
      * @param savedInstanceState
      * @override method call first when application start
      */
@@ -31,6 +43,46 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /** Inizialise MobileAds */
+        MobileAds.initialize(this, YOUR_ADMOB_APP_ID);
+
+        /** Create AdView */
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        mAdView.loadAd(adRequest);
+
+        /** Possible implementation of mAdView */
+        /*
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
+        */
 
         /** setting strict moode policy */
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -167,5 +219,32 @@ public class MainActivity extends AppCompatActivity {
             // Alla fine del listener riporto il colore del pulsante come prima
             calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimary));
         }
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }
