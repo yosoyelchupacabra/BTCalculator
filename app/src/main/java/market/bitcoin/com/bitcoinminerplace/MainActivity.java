@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
      * declaring ADMOB_APP_ID
      */
     String YOUR_ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713";
-
+    boolean DEBUG_MODE = true;
     /**
      * declaring listView, button and progressBar variable
      */
@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         mAdView.loadAd(adRequest);
+        if (DEBUG_MODE) {
+            mAdView.setVisibility(View.GONE);
+        } else {
+            mAdView.setVisibility(View.VISIBLE);
+        }
 
         /** Possible implementation of mAdView */
         /*
