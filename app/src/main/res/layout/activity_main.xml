@@ -32,25 +32,14 @@
             android:layout_width="match_parent"
             android:layout_height="30dp" />
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:max="100"
-            android:backgroundTint="@color/colorAccent"
-            android:layout_below="@+id/framelauout"
-            android:indeterminateTint="@color/buttonPrimary"
-            android:layout_marginTop="0dp"/>
-
-        <ListView
+        <LinearLayout
             android:layout_marginTop="5dp"
             android:layout_weight=".5"
-            android:id="@+id/mainListView"
+            android:orientation="vertical"
+            android:id="@+id/mainLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </ListView>
+        </LinearLayout>
 
         <Button
             android:id="@+id/calculateButton"
@@ -61,15 +50,5 @@
             android:textColor="@color/colorAccent"
             android:textSize="15dp"
             android:textStyle="bold" />
-
-        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:visibility="visible"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"></com.google.android.gms.ads.AdView>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
