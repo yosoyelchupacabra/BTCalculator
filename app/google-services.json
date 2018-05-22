@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "323673813137",
+    "firebase_url": "https://btcalculator.firebaseio.com",
+    "project_id": "btcalculator",
+    "storage_bucket": "btcalculator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323673813137:android:8e6c537df9e752f1",
+        "android_client_info": {
+          "package_name": "market.bitcoin.com.bitcoinminerplace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323673813137-jc078k6jntb6lavl3eb15k30tie19hqk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "market.bitcoin.com.bitcoinminerplace",
+            "certificate_hash": "7c72fcc078126afe6460925b112376831504fad1"
+          }
+        },
+        {
+          "client_id": "323673813137-p09c27514q08k7g0vvjuj44ph1k10964.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCycOrxTch9HfHWHRlZ_haN8mq20eAkQyk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323673813137-p09c27514q08k7g0vvjuj44ph1k10964.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

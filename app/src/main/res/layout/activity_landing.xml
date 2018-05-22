@@ -67,6 +67,6 @@
             android:layout_centerHorizontal="true"
             android:visibility="visible"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"></com.google.android.gms.ads.AdView>
+            ads:adUnitId="ca-app-pub-8887154992538647/4082295649" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

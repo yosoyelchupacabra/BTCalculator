@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,15 +17,16 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import market.bitcoin.com.bitcoinminerplace.adapter.CustomAdapter;
 
 public class LandingActivity extends AppCompatActivity {
+    private FirebaseAnalytics mFirebaseAnalytics;
     /**
      * declaring ADMOB_APP_ID
      */
     String YOUR_ADMOB_APP_ID = "ca-app-pub-8887154992538647~1073274338";
-    String DEVICE_ID = "ca-app-pub-8887154992538647/4082295649";
     /**
      * declaring listView and progressBar variable
      */
@@ -37,6 +39,12 @@ public class LandingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        /** Inizialise MobileAds */
+        MobileAds.initialize(this, YOUR_ADMOB_APP_ID);
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
@@ -44,17 +52,19 @@ public class LandingActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
 
-        /** Inizialise MobileAds */
-        MobileAds.initialize(this, YOUR_ADMOB_APP_ID);
-
         /** Create AdView */
         mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(DEVICE_ID).build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         if (BuildConfig.DEBUG) {
             mAdView.setVisibility(View.GONE);
         } else {
             mAdView.setVisibility(View.VISIBLE);
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "AdMod");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Banner");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         }
 
         /** Possible implementation of mAdView */
@@ -126,7 +136,8 @@ public class LandingActivity extends AppCompatActivity {
         try {
             GetDetails.loadDetailsFromWeb();
         } catch (IllegalArgumentException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(e.getClass().getName(), e.getMessage(), e.getCause());
             finish();
         }
         /**
