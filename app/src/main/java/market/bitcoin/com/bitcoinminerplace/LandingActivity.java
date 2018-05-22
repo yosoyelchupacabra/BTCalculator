@@ -23,7 +23,8 @@ public class LandingActivity extends AppCompatActivity {
     /**
      * declaring ADMOB_APP_ID
      */
-    String YOUR_ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713";
+    String YOUR_ADMOB_APP_ID = "ca-app-pub-8887154992538647~1073274338";
+    String DEVICE_ID = "ca-app-pub-8887154992538647/4082295649";
     /**
      * declaring listView and progressBar variable
      */
@@ -48,7 +49,7 @@ public class LandingActivity extends AppCompatActivity {
 
         /** Create AdView */
         mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(DEVICE_ID).build();
         mAdView.loadAd(adRequest);
         if (BuildConfig.DEBUG) {
             mAdView.setVisibility(View.GONE);
