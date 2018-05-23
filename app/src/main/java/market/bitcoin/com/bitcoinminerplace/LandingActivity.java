@@ -1,17 +1,11 @@
 package market.bitcoin.com.bitcoinminerplace;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -31,7 +25,6 @@ public class LandingActivity extends AppCompatActivity {
      * declaring listView and progressBar variable
      */
     ListView listView;
-    ProgressBar progressBar = null;
     /**
      * declaring AdView
      */
@@ -40,32 +33,26 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        /** Inizialise MobileAds */
-        MobileAds.initialize(this, YOUR_ADMOB_APP_ID);
-        // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            /** Inizialise MobileAds */
+            MobileAds.initialize(this, YOUR_ADMOB_APP_ID);
+            // Obtain the FirebaseAnalytics instance.
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
-        /** initializing ProgressBar */
-        progressBar = (ProgressBar) findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.GONE);
-
-        /** Create AdView */
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        if (BuildConfig.DEBUG) {
-            mAdView.setVisibility(View.GONE);
-        } else {
+        //if (!BuildConfig.DEBUG) {
+            /** Create AdView */
+            mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
             mAdView.setVisibility(View.VISIBLE);
             Bundle bundle = new Bundle();
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1");
             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "AdMod");
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Banner");
             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        }
+        //}
 
         /** Possible implementation of mAdView */
         /*
@@ -124,7 +111,7 @@ public class LandingActivity extends AppCompatActivity {
             }
         });
 
-        new MyAsyncCaller().execute();
+        loadDetails();
     }
 
     /**
@@ -132,12 +119,11 @@ public class LandingActivity extends AppCompatActivity {
      *
      * @throws IllegalArgumentException
      */
-    CustomAdapter loadDetails() {
+    void loadDetails() {
         try {
             GetDetails.loadDetailsFromWeb();
         } catch (IllegalArgumentException e) {
-            // Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e(e.getClass().getName(), e.getMessage(), e.getCause());
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             finish();
         }
         /**
@@ -146,11 +132,11 @@ public class LandingActivity extends AppCompatActivity {
          * @param blockchainDetails
          * */
         CustomAdapter customAdapter = new CustomAdapter(this, GetDetails.blockchainDetails);
-
-        return customAdapter;
+        listView.setAdapter(customAdapter);
     }
 
     /** Called when leaving the activity */
+
     @Override
     public void onPause() {
         if (mAdView != null) {
@@ -160,6 +146,7 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     /** Called when returning to the activity */
+
     @Override
     public void onResume() {
         super.onResume();
@@ -169,6 +156,7 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     /** Called before the activity is destroyed */
+
     @Override
     public void onDestroy() {
         if (mAdView != null) {
@@ -177,41 +165,4 @@ public class LandingActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private class MyAsyncCaller extends AsyncTask<String, Integer, CustomAdapter> {
-        @Override
-        protected void onPreExecute() {
-            // Pre Code
-            // Rendo visibile la progressBar per mostrare che sto caricando
-            progressBar.setVisibility(View.VISIBLE);
-            // Quando premo il pulsante gli cambio il colore per far capire che sta lavorando
-            //calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimaryDark));
-        }
-
-        @Override
-        protected CustomAdapter doInBackground(String... parametro) {
-            // Background Code
-            // Ripopolo i dettagli
-            CustomAdapter customAdapter = loadDetails();
-            //publishProgress();
-            return customAdapter;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            // Executes whenever publishProgress is called from doInBackground
-            // Used to update the progress indicator
-            // progressBar.setProgress();
-        }
-
-        @Override
-        protected void onPostExecute(CustomAdapter result) {
-            // Post Code
-            /** setting up custom adapter object */
-            listView.setAdapter(result);
-            // Rendo invisibile la progressBar per far capire che ho finito di caricare
-            progressBar.setVisibility(View.GONE); //To Hide ProgressBar
-            // Alla fine del listener riporto il colore del pulsante come prima
-            //calculateButton.setBackgroundColor(getResources().getColor(R.color.buttonPrimary));
-        }
-    }
 }

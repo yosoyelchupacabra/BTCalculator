@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'BTCalculatorKey'
+            keyAlias 'key0'
             keyPassword 'password'
             storeFile file('C:/Android/KeyStore/android.jks')
             storePassword 'password'
@@ -32,6 +32,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
+    }
+    productFlavors {
     }
 }
 

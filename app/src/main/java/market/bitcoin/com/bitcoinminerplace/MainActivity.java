@@ -3,19 +3,9 @@ package market.bitcoin.com.bitcoinminerplace;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.ProgressBar;
-import android.os.AsyncTask;
-import market.bitcoin.com.bitcoinminerplace.adapter.CustomAdapter;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 public class MainActivity extends AppCompatActivity {
 
